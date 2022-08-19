@@ -1,28 +1,16 @@
 import { Box, Button, CircularProgress } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
-import { Link } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import { Pokemon, useGetPokemons } from '../../hooks/useGetPokemons';
 import { PokemonCard } from '../PokemonCard';
-import { PokemonDialog } from '../PokemonDialog';
 
 export const PokemonList = () => {
   const classes: any = useStyles();
   const { pokemons, loading } = useGetPokemons();
-  const [open, setOpen] = React.useState(false);
-  const [selectedId, setSeletecdId] = React.useState('');
   const [filteredPokemons, setFilteredPokemons] = useState<
     Pokemon[] | undefined
   >();
-
-  const handleClickOpen = (id: string) => {
-    setSeletecdId(id);
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   useEffect(() => {
     setFilteredPokemons(pokemons);
@@ -64,11 +52,7 @@ export const PokemonList = () => {
             </div>
           )}
           {filteredPokemons?.map((pkmn) => (
-            <Button
-              component={Link}
-              to={`/pokemon/details/${pkmn.id}`}
-              key={pkmn.id}
-            >
+            <Button component={Link} to={`/pokemon/${pkmn.id}`} key={pkmn.id}>
               <PokemonCard
                 id={pkmn.id}
                 number={pkmn.number}
@@ -80,6 +64,7 @@ export const PokemonList = () => {
           ))}
         </div>
       </div>
+      <Outlet></Outlet>
     </div>
   );
 };
