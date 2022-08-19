@@ -20,7 +20,7 @@ import {
   Tooltip,
   useMediaQuery,
   Zoom,
-  useTheme
+  useTheme,
 } from '@mui/material';
 import { CloseOutlined } from '@mui/icons-material';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -40,12 +40,8 @@ export const PokemonDialog: React.FC<PokemonDialogProps> = ({ open }) => {
 
   const classes: any = useStyles();
 
-  const handleClose = () => {
-    navigate('/pokemon');
-  };
-
   return (
-    <Dialog onClose={handleClose} open={open} fullScreen={fullScreen}>
+    <Dialog onClose={() => navigate(-1)} open={open} fullScreen={fullScreen}>
       {!loading && pokemonDetails?.name && (
         <div className={classes.root}>
           <Card sx={{ maxWidth: 500 }}>
@@ -54,7 +50,7 @@ export const PokemonDialog: React.FC<PokemonDialogProps> = ({ open }) => {
               placement="bottom"
               TransitionComponent={Zoom}
             >
-              <IconButton className={classes.close} onClick={handleClose}>
+              <IconButton className={classes.close} onClick={() => navigate(-1)}>
                 <CloseOutlined color="success" />
               </IconButton>
             </Tooltip>
