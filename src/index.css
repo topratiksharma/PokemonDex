@@ -1,9 +1,9 @@
+@import 'material-icons/iconfont/material-icons.css';
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import 'material-icons/iconfont/material-icons.css';
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
 
 body {
   background: #171E2b;
