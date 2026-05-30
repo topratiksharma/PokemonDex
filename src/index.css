@@ -49,7 +49,7 @@
   --c-close-btn-hover: rgba(255,255,255,0.10);
   --c-mobile-btn:    rgba(255,255,255,0.06);
   --c-mobile-btn-border: rgba(255,255,255,0.10);
-  --c-sprite-circle: rgba(255,255,255,0.92);
+  --c-sprite-circle: #ffffff;
   --c-icon:          #3D424D;
   --c-toggle-icon:   #505560;
   --c-logo-filter:   brightness(1) opacity(0.45);
@@ -104,7 +104,7 @@
   --c-close-btn-hover: rgba(0,0,0,0.09);
   --c-mobile-btn:    #FFFFFF;
   --c-mobile-btn-border: #E2E4E8;
-  --c-sprite-circle: rgba(0,0,0,0.04);
+  --c-sprite-circle: #FFFFFF;
   --c-icon:          #9EA3AD;
   --c-toggle-icon:   #6B7280;
   --c-logo-filter:   brightness(0) opacity(0.35);
