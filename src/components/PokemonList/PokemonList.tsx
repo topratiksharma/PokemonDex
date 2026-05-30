@@ -32,40 +32,46 @@ export const PokemonList = () => {
   }, [debouncedSearch, pokemons]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-8 px-4 text-center box-border">
-      <div className="flex flex-col items-center justify-center mt-[50px]">
-        {!loading && (
-          <div className="fixed top-0 z-[2] flex flex-wrap items-center justify-center w-full h-[69px] bg-[#171e2b]">
-            <input
-              type="text"
-              id="search"
-              placeholder="Search Pokémon"
-              aria-label="Search Pokémon"
-              value={searchValue}
-              onChange={(e) => setSearchValue(e.target.value)}
-              className="border border-white/10 rounded-xl px-4 py-2 text-[#180d0d] bg-white/90 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-400 focus:outline-none text-base h-8 w-[84vw] max-[1280px]:w-[74vw] max-[768px]:w-[58vw] transition-all"
-            />
-          </div>
-        )}
-        <div className="flex flex-wrap items-center justify-center">
-          {loading && (
-            <Box sx={{ display: 'flex' }}>
-              <CircularProgress />
-            </Box>
-          )}
-          {error && <p className="text-red-400">Failed to load Pokémon. Please try again.</p>}
-          {filteredPokemons.map((pkmn) => (
-            <Button component={Link} to={`/pokemon/${pkmn.id}`} key={pkmn.id} sx={{ p: 0 }}>
-              <PokemonCard
-                id={pkmn.id}
-                number={pkmn.number}
-                image={pkmn.image}
-                name={pkmn.name}
-                types={pkmn.types}
-              />
-            </Button>
-          ))}
+    <div className="flex flex-col items-center min-h-screen pt-[85px] pb-8 px-4 box-border">
+      {!loading && (
+        <div className="fixed top-0 left-0 right-0 z-[2] flex items-center justify-center h-[69px] bg-[#171e2b] border-b border-white/[0.06] backdrop-blur-sm px-4">
+          <input
+            type="text"
+            id="search"
+            placeholder="Search Pokémon…"
+            aria-label="Search Pokémon"
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            className="w-full max-w-2xl bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-white placeholder:text-white/30 focus:ring-2 focus:ring-blue-400 focus:outline-none text-sm transition-all duration-150"
+          />
         </div>
+      )}
+
+      <div className="flex flex-wrap items-start justify-center gap-1 w-full">
+        {loading && (
+          <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', mt: 8 }}>
+            <CircularProgress />
+          </Box>
+        )}
+        {error && (
+          <p className="text-red-400 mt-8">Failed to load Pokémon. Please try again.</p>
+        )}
+        {filteredPokemons.map((pkmn) => (
+          <Button
+            component={Link}
+            to={`/pokemon/${pkmn.id}`}
+            key={pkmn.id}
+            sx={{ p: 0, minWidth: 0, textTransform: 'none' }}
+          >
+            <PokemonCard
+              id={pkmn.id}
+              number={pkmn.number}
+              image={pkmn.image}
+              name={pkmn.name}
+              types={pkmn.types}
+            />
+          </Button>
+        ))}
       </div>
       <Outlet />
     </div>

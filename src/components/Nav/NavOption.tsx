@@ -10,19 +10,23 @@ interface NavOptionProps {
 }
 
 export const NavOption: React.FC<NavOptionProps> = ({ to, icon, name, children }) => {
-  const base = 'w-full flex items-center box-border h-14 no-underline overflow-hidden bg-[#131924] hover:brightness-125 active:brightness-130 transition-all';
-  const active = 'bg-[#171E2b] border-l-4 border-blue-400';
-
   return (
     <NavLink
       to={to}
       title={name}
-      className={({ isActive }) => clsx(base, { [active]: isActive })}
+      className={({ isActive }) =>
+        clsx(
+          'w-full flex items-center h-12 no-underline overflow-hidden mx-2 rounded-lg transition-all duration-150',
+          isActive
+            ? 'bg-white/10 border-l-[3px] border-blue-400 text-white'
+            : 'text-white/60 hover:bg-white/[0.06] hover:text-white/90'
+        )
+      }
     >
-      <span className={clsx('material-icons flex items-center justify-center w-[45px] min-w-[45px] box-border')}>
+      <span className="material-icons flex items-center justify-center w-[45px] min-w-[45px] text-[20px]">
         {icon}
       </span>
-      <span className="ml-[18px] whitespace-nowrap">{children}</span>
+      <span className="ml-2 whitespace-nowrap text-sm font-medium">{children}</span>
     </NavLink>
   );
 };
