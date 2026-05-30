@@ -1,6 +1,25 @@
-import { createUseStyles } from 'react-jss';
 import React from 'react';
-import { Chip } from '@mui/material';
+
+const TYPE_BG: Record<string, string> = {
+  bug:      'bg-[#F6D6A7]',
+  dragon:   'bg-[#FBE3DF]',
+  electric: 'bg-[#ffffa1]',
+  fairy:    'bg-[#ffc0cb]',
+  fighting: 'bg-[#a1a6f9]',
+  fire:     'bg-[#FFC107]',
+  ghost:    'bg-[#f7f7f7]',
+  grass:    'bg-[#E2F9E1]',
+  ground:   'bg-[#9e9e9e]',
+  ice:      'bg-[#00BCD4]',
+  normal:   'bg-white',
+  poison:   'bg-[#eac6f7]',
+  psychic:  'bg-[#CDDC39]',
+  rock:     'bg-[#c49393]',
+  water:    'bg-[#b4defb]',
+  flying:   'bg-slate-200',
+  steel:    'bg-slate-300',
+  dark:     'bg-[#705848]',
+};
 
 type Props = {
   id: string;
@@ -10,89 +29,37 @@ type Props = {
   number: number;
 };
 
-export const PokemonCard: React.FC<Props> = ({
-  id,
-  name,
-  image,
-  types,
-  number,
-}) => {
-  const classes = useStyles() as Record<string, string>;
+export const PokemonCard: React.FC<Props> = ({ id, name, image, types, number }) => {
+  const typeBg = TYPE_BG[types[0]?.toLowerCase()] ?? 'bg-white';
 
   return (
-    <div>
-      <div
-        key={id}
-        className={
-          classes.thumbContainer + ' ' + classes[types[0].toLowerCase()]
-        }
-      >
-        <label className={classes.number}>{'#' + String(number).padStart(3, '0')}</label>
-        <img src={image} alt={name} className={classes.img}></img>
-        <div className={classes.detailWrapper}>
-          <h3 className={classes.label}>{name}</h3>
-          <small className={classes.label}>{types.join(', ')}</small>
+    <div
+      key={id}
+      className={`${typeBg} flex flex-col items-center justify-center m-[0.3rem] min-w-[160px] py-6 rounded-2xl border border-black/5 shadow-md text-center z-[1] cursor-pointer hover:scale-[1.05] hover:shadow-xl transition-all duration-200`}
+    >
+      <label className="text-[#3e3232] text-[14px] font-bold self-end pr-2">
+        {'#' + String(number).padStart(3, '0')}
+      </label>
+      <img
+        src={image}
+        alt={name}
+        className="w-[120px] h-[120px] rounded-full drop-shadow-[0_4px_10px_rgba(0,0,0,0.3)]"
+      />
+      <div className="flex flex-col w-full mt-1">
+        <h3 className="mb-[0.2rem] text-black font-semibold">{name}</h3>
+        <div className="flex justify-center gap-1 flex-wrap px-2">
+          {types.map((t) => (
+            <span
+              key={t}
+              className="rounded-full px-2 py-0.5 text-[11px] font-semibold bg-black/10 text-black"
+            >
+              {t}
+            </span>
+          ))}
         </div>
       </div>
     </div>
   );
 };
-
-const useStyles = createUseStyles(
-  {
-    thumbContainer: {
-      alignItems: 'center',
-      backgroundColor: 'white',
-      border: '1px solid transparent',
-      borderRadius: '0.8rem',
-      boxShadow: '0 3px 15px rgba(0, 0, 0, 0.089)',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      margin: '0.3rem',
-      minWidth: '160px',
-      padding: '1.5rem 0',
-      textAlign: 'center',
-      zIndex: 1,
-      '&:hover': {
-        cursor: 'pointer',
-        transform: 'scale(1.05)',
-        transition: 'transform .2s ease-in-out',
-      },
-    },
-    bug: { backgroundColor: '#F6D6A7' },
-    dragon: { backgroundColor: '#FBE3DF' },
-    electric: { backgroundColor: '#ffffa1' },
-    fairy: { backgroundColor: '#ffc0cbdc' },
-    fighting: { backgroundColor: '#a1a6f9' },
-    fire: { backgroundColor: '#FFC107' },
-    ghost: { backgroundColor: 'rgb(247, 247, 247)' },
-    grass: { backgroundColor: '#E2F9E1' },
-    ground: { backgroundColor: '#9e9e9e' },
-    ice: { backgroundColor: '#00BCD4' },
-    normal: { backgroundColor: 'white' },
-    poison: { backgroundColor: '#eac6f7' },
-    psychic: { backgroundColor: '#CDDC39' },
-    rock: { backgroundColor: '#c49393' },
-    water: { backgroundColor: '#b4defb' },
-    number: {
-      color: '#3e3232',
-      fontSize: '14px',
-      fontWeight: 'bold',
-    },
-    label: { marginBottom: '0.2rem', color: '#000000' },
-    img: {
-      width: '120px',
-      height: '120px',
-      borderRadius: '50%',
-    },
-    detailWrapper: {
-      display: 'flex',
-      flexDirection: 'column',
-      width: '100%',
-    },
-  },
-  { name: 'PokemonCard' }
-);
 
 export default PokemonCard;

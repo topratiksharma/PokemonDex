@@ -1,23 +1,20 @@
 import React from 'react';
-import { createUseStyles } from 'react-jss';
 import { Routes, Route, HashRouter } from 'react-router-dom';
 import { LayoutProvider } from '../contexts';
-import { Nav } from '../components';
+import { Nav, PokemonDialog } from '../components';
 import { ApolloProvider } from '@apollo/client/react';
 import { client } from './client';
 import { ListPage, Home } from '../screens';
-import { PokemonDialog } from '../components';
 
 function App() {
-  const classes = useStyles();
   return (
     <ApolloProvider client={client}>
       <LayoutProvider>
-        <div className={classes.root}>
+        <div className="bg-[#171E2b] min-h-screen min-w-full h-full w-full flex">
           <HashRouter future={{ v7_startTransition: true }}>
             <Nav />
-            <div className={classes.content}>
-              <div className={classes.scrollableArea}>
+            <div className="flex-1 overflow-hidden relative">
+              <div className="absolute inset-0 overflow-auto">
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="pokemon" element={<ListPage />}>
@@ -33,32 +30,5 @@ function App() {
     </ApolloProvider>
   );
 }
-
-const useStyles = createUseStyles(
-  {
-    root: {
-      background: '#171E2b',
-      minHeight: '100vh',
-      minWidth: '100vw',
-      height: '100%',
-      width: '100%',
-      display: 'flex',
-    },
-    content: {
-      flex: '1',
-      overflow: 'hidden',
-      position: 'relative',
-    },
-    scrollableArea: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      overflow: 'auto',
-    },
-  },
-  { name: 'App' }
-);
 
 export default App;

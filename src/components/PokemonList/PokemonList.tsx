@@ -1,12 +1,10 @@
 import { Box, Button, CircularProgress } from '@mui/material';
-import React, { useEffect, useRef, useState } from 'react';
-import { createUseStyles } from 'react-jss';
+import React, { useEffect, useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import { Pokemon, useGetPokemons } from '../../hooks/useGetPokemons';
 import { PokemonCard } from '../PokemonCard';
 
 export const PokemonList = () => {
-  const classes: any = useStyles();
   const { pokemons, loading, error } = useGetPokemons();
   const [searchValue, setSearchValue] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
@@ -34,10 +32,10 @@ export const PokemonList = () => {
   }, [debouncedSearch, pokemons]);
 
   return (
-    <div className={classes.root}>
-      <div className={classes.pokemonContainer}>
+    <div className="flex flex-col items-center justify-center min-h-screen py-8 px-4 text-center box-border">
+      <div className="flex flex-col items-center justify-center mt-[50px]">
         {!loading && (
-          <div className={classes.searchComponent}>
+          <div className="fixed top-0 z-[2] flex flex-wrap items-center justify-center w-full h-[69px] bg-[#171e2b]">
             <input
               type="text"
               id="search"
@@ -45,19 +43,19 @@ export const PokemonList = () => {
               aria-label="Search Pokémon"
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
-              className={classes.search}
+              className="border border-white/10 rounded-xl px-4 py-2 text-[#180d0d] bg-white/90 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-400 focus:outline-none text-base h-8 w-[84vw] max-[1280px]:w-[74vw] max-[768px]:w-[58vw] transition-all"
             />
           </div>
         )}
-        <div className={classes.allContainer}>
+        <div className="flex flex-wrap items-center justify-center">
           {loading && (
             <Box sx={{ display: 'flex' }}>
               <CircularProgress />
             </Box>
           )}
-          {error && <p>Failed to load Pokémon. Please try again.</p>}
+          {error && <p className="text-red-400">Failed to load Pokémon. Please try again.</p>}
           {filteredPokemons.map((pkmn) => (
-            <Button component={Link} to={`/pokemon/${pkmn.id}`} key={pkmn.id}>
+            <Button component={Link} to={`/pokemon/${pkmn.id}`} key={pkmn.id} sx={{ p: 0 }}>
               <PokemonCard
                 id={pkmn.id}
                 number={pkmn.number}
@@ -73,55 +71,3 @@ export const PokemonList = () => {
     </div>
   );
 };
-
-const useStyles = createUseStyles(
-  {
-    root: {
-      alignItems: 'center',
-      boxSizing: 'border-box',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      minHeight: '100vh',
-      padding: '32px',
-      textAlign: 'center',
-    },
-    search: {
-      border: '1px solid #ccc',
-      borderRadius: '5px',
-      color: '#180d0d',
-      fontSize: '16px',
-      height: '2rem',
-      padding: '5px 10px',
-      width: '84vw',
-      '@media (max-width: 1280px)': { width: '74vw' },
-      '@media (max-width: 768px)': { width: '58vw' },
-    },
-    searchComponent: {
-      alignItems: 'center',
-      background: '#171e2b',
-      display: 'flex',
-      flexWrap: 'wrap',
-      height: '69px',
-      justifyContent: 'center',
-      position: 'fixed',
-      top: '0',
-      width: '100%',
-      zIndex: 2,
-    },
-    pokemonContainer: {
-      alignItems: 'center',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      marginTop: '50px',
-    },
-    allContainer: {
-      alignItems: 'center',
-      display: 'flex',
-      flexWrap: 'wrap',
-      justifyContent: 'center',
-    },
-  },
-  { name: 'PokemonList' }
-);
