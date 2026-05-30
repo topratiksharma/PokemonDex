@@ -30,7 +30,7 @@ export const PokemonList = () => {
       {/* Search bar */}
       {!loading && (
         <div
-          className="sticky top-0 z-[2] flex items-center gap-3 py-2.5 pl-14 pr-4 md:px-5"
+          className="sticky top-[48px] z-[2] flex items-center gap-3 py-2.5 px-4"
           style={{
             background: 'var(--c-header-bar)',
             backdropFilter: 'blur(16px)',

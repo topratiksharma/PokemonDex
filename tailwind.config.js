@@ -5,8 +5,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        display: ['"Bricolage Grotesque"', 'sans-serif'],
-        sans:    ['"Instrument Sans"', 'system-ui', 'sans-serif'],
+        display: ['"Fraunces"', 'serif'],
+        sans:    ['"Figtree"', 'system-ui', 'sans-serif'],
         mono:    ['"JetBrains Mono"', 'monospace'],
       },
     },

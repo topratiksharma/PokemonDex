@@ -6,112 +6,112 @@
 
 /* ─── Dark theme (default) ─────────────────────────────── */
 :root {
-  --bg:             #0F1114;
-  --surface:        #181B1F;
-  --surface-2:      #1E2126;
-  --c-nav:          #0F1114;
-  --c-dialog:       #181B1F;
-  --c-stat-cell:    #181B1F;
-  --c-header-bar:   rgba(15,17,20,0.90);
+  --bg:             #0D0D0B;
+  --surface:        #141413;
+  --surface-2:      #1A1A18;
+  --c-nav:          #0D0D0B;
+  --c-topbar:       rgba(13,13,11,0.94);
+  --c-dialog:       #141413;
+  --c-stat-cell:    #141413;
+  --c-header-bar:   rgba(13,13,11,0.94);
 
-  --c-rim:          #24272C;
-  --c-rim-nav:      #1E2126;
-  --c-rim-stat:     #24272C;
-  --c-rim-search:   #2C2F35;
-  --c-rim-header:   #1E2126;
-  --c-rim-dialog:   #24272C;
+  --c-rim:          #252520;
+  --c-rim-nav:      #1E1E1C;
+  --c-rim-stat:     #1E1E1C;
+  --c-rim-search:   #2A2A26;
+  --c-rim-header:   #1E1E1C;
+  --c-rim-dialog:   #252520;
+  --c-rim-hover:    #353530;
 
-  --c-text:         #E8EAED;
-  --c-text-2:       #686E78;
-  --c-text-3:       #3D424D;
-  --c-text-stat-label: #565C68;
-  --c-text-stat-value: #E8EAED;
+  --c-text:         #EAEAE6;
+  --c-text-2:       #666660;
+  --c-text-3:       #3A3A36;
+  --c-text-stat-label: #525250;
+  --c-text-stat-value: #DEDED8;
 
-  --c-nav-active-bg:     rgba(255,255,255,0.06);
-  --c-nav-active-border: rgba(255,255,255,0.25);
-  --c-nav-active-text:   #E8EAED;
-  --c-nav-active-icon:   #E8EAED;
-  --c-nav-inactive-text: #505560;
-  --c-nav-inactive-icon: #3D424D;
+  --c-nav-active-bg:     rgba(255,255,255,0.05);
+  --c-nav-active-border: rgba(255,255,255,0.22);
+  --c-nav-active-text:   #EAEAE6;
+  --c-nav-active-icon:   #EAEAE6;
+  --c-nav-inactive-text: #4E4E4A;
+  --c-nav-inactive-icon: #3A3A36;
   --c-nav-hover:         rgba(255,255,255,0.04);
-  --c-collapse-text:     #505560;
-  --c-wordmark:          #E8EAED;
+  --c-collapse-text:     #4E4E4A;
+  --c-wordmark:          #EAEAE6;
 
   --c-search:        rgba(255,255,255,0.04);
   --c-search-focus:  rgba(255,255,255,0.14);
   --c-search-focus-bg: rgba(255,255,255,0.06);
-  --c-count-bg:      rgba(255,255,255,0.05);
-  --c-count-text:    #565C68;
-  --c-rim-count:     #2C2F35;
+  --c-count-bg:      rgba(255,255,255,0.04);
+  --c-count-text:    #525250;
+  --c-rim-count:     #2A2A26;
 
-  --c-backdrop:      rgba(0,0,0,0.65);
+  --c-backdrop:      rgba(0,0,0,0.70);
   --c-close-btn:     rgba(255,255,255,0.06);
   --c-close-btn-hover: rgba(255,255,255,0.10);
   --c-mobile-btn:    rgba(255,255,255,0.06);
   --c-mobile-btn-border: rgba(255,255,255,0.10);
-  --c-sprite-circle: #ffffff;
-  --c-icon:          #3D424D;
-  --c-toggle-icon:   #505560;
-  --c-logo-filter:   brightness(1) opacity(0.45);
-  --c-loading-text:  #3D424D;
-  --c-placeholder:   #404550;
-  --c-dialog-shadow: 0 8px 40px rgba(0,0,0,0.65), 0 0 0 1px rgba(255,255,255,0.05);
-  --sprite-blend:    multiply;
+  --c-icon:          #3A3A36;
+  --c-toggle-icon:   #4E4E4A;
+  --c-logo-filter:   brightness(1) opacity(0.40);
+  --c-loading-text:  #3A3A36;
+  --c-placeholder:   #3E3E3A;
+  --c-dialog-shadow: 0 8px 48px rgba(0,0,0,0.70), 0 0 0 1px rgba(255,255,255,0.04);
 }
 
 /* ─── Light theme ───────────────────────────────────────── */
 [data-theme="light"] {
-  --bg:             #F5F6F8;
-  --surface:        #FFFFFF;
-  --surface-2:      #F8F9FA;
-  --c-nav:          #FFFFFF;
-  --c-dialog:       #FFFFFF;
-  --c-stat-cell:    #FAFBFC;
-  --c-header-bar:   rgba(245,246,248,0.92);
+  --bg:             #EEECEA;
+  --surface:        #FAFAF8;
+  --surface-2:      #F2F1ED;
+  --c-nav:          #FAFAF8;
+  --c-topbar:       rgba(250,250,248,0.96);
+  --c-dialog:       #FAFAF8;
+  --c-stat-cell:    #F5F4F0;
+  --c-header-bar:   rgba(250,250,248,0.96);
 
-  --c-rim:          #E2E4E8;
-  --c-rim-nav:      #E2E4E8;
-  --c-rim-stat:     #EDEFF2;
-  --c-rim-search:   #D6D9DF;
-  --c-rim-header:   #E2E4E8;
-  --c-rim-dialog:   #E2E4E8;
+  --c-rim:          #E0DED8;
+  --c-rim-nav:      #E0DED8;
+  --c-rim-stat:     #EAEAE6;
+  --c-rim-search:   #D4D2CC;
+  --c-rim-header:   #E0DED8;
+  --c-rim-dialog:   #E0DED8;
+  --c-rim-hover:    #C4C2BC;
 
-  --c-text:         #111214;
-  --c-text-2:       #6B7280;
-  --c-text-3:       #9EA3AD;
-  --c-text-stat-label: #8B909A;
-  --c-text-stat-value: #111214;
+  --c-text:         #1A1A16;
+  --c-text-2:       #6A6A62;
+  --c-text-3:       #9E9E96;
+  --c-text-stat-label: #888880;
+  --c-text-stat-value: #1A1A16;
 
-  --c-nav-active-bg:     #EDEEF0;
-  --c-nav-active-border: #111214;
-  --c-nav-active-text:   #111214;
-  --c-nav-active-icon:   #111214;
-  --c-nav-inactive-text: #6B7280;
-  --c-nav-inactive-icon: #9EA3AD;
+  --c-nav-active-bg:     #EDECEA;
+  --c-nav-active-border: #1A1A16;
+  --c-nav-active-text:   #1A1A16;
+  --c-nav-active-icon:   #1A1A16;
+  --c-nav-inactive-text: #6A6A62;
+  --c-nav-inactive-icon: #9E9E96;
   --c-nav-hover:         rgba(0,0,0,0.03);
-  --c-collapse-text:     #9EA3AD;
-  --c-wordmark:          #111214;
+  --c-collapse-text:     #9E9E96;
+  --c-wordmark:          #1A1A16;
 
   --c-search:        rgba(0,0,0,0.04);
-  --c-search-focus:  #6B7280;
+  --c-search-focus:  #6A6A62;
   --c-search-focus-bg: rgba(0,0,0,0.05);
   --c-count-bg:      rgba(0,0,0,0.04);
-  --c-count-text:    #8B909A;
-  --c-rim-count:     #D6D9DF;
+  --c-count-text:    #888880;
+  --c-rim-count:     #D4D2CC;
 
-  --c-backdrop:      rgba(0,0,0,0.25);
+  --c-backdrop:      rgba(0,0,0,0.22);
   --c-close-btn:     rgba(0,0,0,0.05);
   --c-close-btn-hover: rgba(0,0,0,0.09);
-  --c-mobile-btn:    #FFFFFF;
-  --c-mobile-btn-border: #E2E4E8;
-  --c-sprite-circle: #FFFFFF;
-  --c-icon:          #9EA3AD;
-  --c-toggle-icon:   #6B7280;
-  --c-logo-filter:   brightness(0) opacity(0.35);
-  --c-loading-text:  #9EA3AD;
-  --c-placeholder:   #9EA3AD;
-  --c-dialog-shadow: 0 8px 40px rgba(0,0,0,0.10), 0 0 0 1px rgba(0,0,0,0.06);
-  --sprite-blend:    normal;
+  --c-mobile-btn:    #FAFAF8;
+  --c-mobile-btn-border: #E0DED8;
+  --c-icon:          #9E9E96;
+  --c-toggle-icon:   #6A6A62;
+  --c-logo-filter:   brightness(0) opacity(0.28);
+  --c-loading-text:  #9E9E96;
+  --c-placeholder:   #9E9E96;
+  --c-dialog-shadow: 0 8px 48px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.05);
 }
 
 /* ─── Base ──────────────────────────────────────────────── */
@@ -120,7 +120,7 @@ body {
   min-height: 100vh;
   background: var(--bg);
   color: var(--c-text);
-  font-family: 'Instrument Sans', system-ui, sans-serif;
+  font-family: 'Figtree', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   transition: background-color 0.2s ease, color 0.2s ease;
@@ -141,14 +141,8 @@ button {
   cursor: pointer;
 }
 
-/* Sprite blend switches with theme */
-.sprite-img {
-  mix-blend-mode: multiply;
-  display: block;
-}
-[data-theme="light"] .sprite-img {
-  mix-blend-mode: normal;
-}
+.sprite-img { display: block; mix-blend-mode: multiply; }
+[data-theme="light"] .sprite-img { mix-blend-mode: normal; }
 
 .search-input::placeholder { color: var(--c-placeholder); }
 .search-input:focus {
@@ -164,7 +158,7 @@ body { scrollbar-width: thin; scrollbar-color: var(--c-rim) transparent; }
 
 /* Card entrance */
 @keyframes cardIn {
-  from { opacity: 0; transform: translateY(6px); }
+  from { opacity: 0; transform: translateY(5px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.card-in { animation: cardIn 0.3s ease both; }
+.card-in { animation: cardIn 0.25s ease both; }

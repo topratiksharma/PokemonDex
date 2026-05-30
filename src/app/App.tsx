@@ -1,30 +1,74 @@
 import React from 'react';
-import { Routes, Route, HashRouter } from 'react-router-dom';
-import { LayoutProvider, useLayout, useToggleNav, ThemeModeProvider } from '../contexts';
-import { Nav, PokemonDialog } from '../components';
+import { Routes, Route, HashRouter, Navigate } from 'react-router-dom';
+import { ThemeModeProvider, useColorScheme } from '../contexts';
+import { PokemonDialog } from '../components';
 import { ApolloProvider } from '@apollo/client/react';
 import { client } from './client';
-import { ListPage, Home } from '../screens';
+import { ListPage } from '../screens';
 
-const MobileMenuButton = () => {
-  const { navCollapsed } = useLayout();
-  const toggleNav = useToggleNav();
-
-  if (!navCollapsed) return null;
+const TopBar = () => {
+  const { colorScheme, toggleColorScheme } = useColorScheme();
 
   return (
-    <button
-      className="md:hidden fixed top-3 left-3 z-[98] flex items-center justify-center w-9 h-9 rounded-full"
+    <div
       style={{
-        background: 'var(--c-mobile-btn)',
-        border: '1px solid var(--c-mobile-btn-border)',
-        backdropFilter: 'blur(12px)',
+        position: 'sticky',
+        top: 0,
+        zIndex: 100,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: '0 16px',
+        height: '48px',
+        background: 'var(--c-topbar)',
+        backdropFilter: 'blur(20px)',
+        borderBottom: '1px solid var(--c-rim-header)',
       }}
-      onClick={toggleNav}
-      aria-label="Open navigation"
     >
-      <span className="material-icons text-[20px]">menu</span>
-    </button>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <img
+          src="/pokeball-white.png"
+          style={{ width: '20px', height: '20px', filter: 'var(--c-logo-filter)', flexShrink: 0 }}
+          alt=""
+        />
+        <span
+          style={{
+            fontFamily: '"Fraunces", serif',
+            fontWeight: 700,
+            fontSize: '17px',
+            letterSpacing: '-0.02em',
+            color: 'var(--c-text)',
+            lineHeight: 1,
+          }}
+        >
+          Pokédex
+        </span>
+      </div>
+
+      <button
+        onClick={toggleColorScheme}
+        aria-label={`Switch to ${colorScheme === 'dark' ? 'light' : 'dark'} mode`}
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '32px',
+          height: '32px',
+          borderRadius: '8px',
+          background: 'transparent',
+          transition: 'background 0.15s ease',
+        }}
+        onMouseEnter={e => (e.currentTarget.style.background = 'var(--c-nav-hover)')}
+        onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+      >
+        <span
+          className="material-icons"
+          style={{ fontSize: '18px', color: 'var(--c-toggle-icon)' }}
+        >
+          {colorScheme === 'dark' ? 'light_mode' : 'dark_mode'}
+        </span>
+      </button>
+    </div>
   );
 };
 
@@ -32,25 +76,20 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <ThemeModeProvider>
-        <LayoutProvider>
-          <div className="min-h-screen min-w-full h-full w-full flex">
-            <HashRouter future={{ v7_startTransition: true }}>
-              <Nav />
-              <MobileMenuButton />
-              <div className="flex-1 overflow-hidden relative">
-                <div className="absolute inset-0 overflow-auto">
-                  <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="pokemon" element={<ListPage />}>
-                      <Route path=":id" element={<PokemonDialog open={true} />} />
-                    </Route>
-                    <Route path="*" element={<Home />} />
-                  </Routes>
-                </div>
-              </div>
-            </HashRouter>
-          </div>
-        </LayoutProvider>
+        <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+          <HashRouter future={{ v7_startTransition: true }}>
+            <TopBar />
+            <div style={{ flex: 1 }}>
+              <Routes>
+                <Route path="/" element={<Navigate to="/pokemon" replace />} />
+                <Route path="pokemon" element={<ListPage />}>
+                  <Route path=":id" element={<PokemonDialog open={true} />} />
+                </Route>
+                <Route path="*" element={<Navigate to="/pokemon" replace />} />
+              </Routes>
+            </div>
+          </HashRouter>
+        </div>
       </ThemeModeProvider>
     </ApolloProvider>
   );
