@@ -9,24 +9,24 @@ export interface PokemonDialogProps {
 }
 
 const TYPE_ACCENT: Record<string, string> = {
-  bug:      '#84CC16',
-  dragon:   '#8B5CF6',
-  electric: '#EAB308',
-  fairy:    '#F472B6',
-  fighting: '#EF4444',
-  fire:     '#F97316',
-  ghost:    '#818CF8',
-  grass:    '#4ADE80',
-  ground:   '#F59E0B',
-  ice:      '#22D3EE',
-  normal:   '#94A3B8',
-  poison:   '#C084FC',
-  psychic:  '#FB7185',
-  rock:     '#A8A29E',
-  water:    '#38BDF8',
-  flying:   '#7DD3FC',
-  steel:    '#93C5FD',
-  dark:     '#A8A29E',
+  bug:      '#748F3F',
+  dragon:   '#6154A0',
+  electric: '#A8880C',
+  fairy:    '#A85A7C',
+  fighting: '#986048',
+  fire:     '#B86A38',
+  ghost:    '#6060A0',
+  grass:    '#538A60',
+  ground:   '#9A7848',
+  ice:      '#4888A0',
+  normal:   '#7A8490',
+  poison:   '#8050A0',
+  psychic:  '#A04870',
+  rock:     '#8A7C68',
+  water:    '#3C78B0',
+  flying:   '#5070A8',
+  steel:    '#5878A0',
+  dark:     '#585048',
 };
 
 const s = {
@@ -39,34 +39,21 @@ const s = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    paddingTop: '32px',
-    paddingBottom: '16px',
-    paddingLeft: '24px',
-    paddingRight: '24px',
+    padding: '32px 24px 20px',
     flexShrink: 0,
-    background: `linear-gradient(160deg, ${accent}22 0%, transparent 55%)`,
+    background: `${accent}0C`,
     borderBottom: '1px solid var(--c-rim-nav)',
-  }),
-  glow: (accent: string): React.CSSProperties => ({
-    position: 'absolute',
-    top: '5%',
-    left: '50%',
-    transform: 'translateX(-50%)',
-    width: '180px',
-    height: '130px',
-    background: `radial-gradient(ellipse, ${accent}28 0%, transparent 68%)`,
-    pointerEvents: 'none',
   }),
   closeBtn: (): React.CSSProperties => ({
     position: 'absolute',
-    top: '10px',
-    right: '10px',
+    top: '12px',
+    right: '12px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '28px',
-    height: '28px',
-    borderRadius: '50%',
+    width: '26px',
+    height: '26px',
+    borderRadius: '6px',
     background: 'var(--c-close-btn)',
     border: '1px solid var(--c-rim)',
     cursor: 'pointer',
@@ -76,29 +63,29 @@ const s = {
     display: 'flex' as const,
     flexDirection: 'column' as const,
     alignItems: 'center' as const,
-    padding: '12px 24px 10px',
+    padding: '16px 24px 12px',
     flexShrink: 0,
   },
   number: {
     fontFamily: '"JetBrains Mono", monospace',
     fontSize: '10px',
     color: 'var(--c-text-3)',
-    letterSpacing: '0.15em',
+    letterSpacing: '0.12em',
     marginBottom: '4px',
   },
   name: {
-    fontFamily: '"Syne", sans-serif',
+    fontFamily: '"Bricolage Grotesque", sans-serif',
     fontWeight: 700,
     fontSize: '26px',
     color: 'var(--c-text)',
-    letterSpacing: '-0.02em',
+    letterSpacing: '-0.025em',
     lineHeight: 1,
-    marginBottom: '8px',
+    marginBottom: '10px',
     textTransform: 'capitalize' as const,
   },
   typesRow: {
     display: 'flex' as const,
-    gap: '5px',
+    gap: '6px',
     flexWrap: 'wrap' as const,
     justifyContent: 'center' as const,
   },
@@ -112,8 +99,8 @@ const s = {
   statCell: (wide: boolean): React.CSSProperties => ({
     display: 'flex',
     flexDirection: 'column',
-    gap: '1px',
-    padding: '8px 14px',
+    gap: '2px',
+    padding: '10px 16px',
     background: 'var(--c-stat-cell)',
     gridColumn: wide ? 'span 2' : 'span 1',
   }),
@@ -121,15 +108,15 @@ const s = {
     fontSize: '9.5px',
     color: 'var(--c-text-stat-label)',
     fontFamily: '"JetBrains Mono", monospace',
-    letterSpacing: '0.08em',
+    letterSpacing: '0.07em',
     textTransform: 'uppercase' as const,
   },
   statValue: {
-    fontSize: '12.5px',
-    fontWeight: 600,
+    fontSize: '13px',
+    fontWeight: 500,
     color: 'var(--c-text-stat-value)',
     lineHeight: 1.3,
-    fontFamily: '"Figtree", sans-serif',
+    fontFamily: '"Instrument Sans", sans-serif',
   },
 };
 
@@ -141,13 +128,12 @@ export const PokemonDialog: React.FC<PokemonDialogProps> = ({ open }) => {
   const navigate = useNavigate();
 
   const primaryType = pokemonDetails?.types?.[0]?.toLowerCase() ?? 'normal';
-  const accent = TYPE_ACCENT[primaryType] ?? '#94A3B8';
+  const accent = TYPE_ACCENT[primaryType] ?? '#7A8490';
 
   const fleeRate = pokemonDetails?.fleeRate != null
     ? `${(Number(pokemonDetails.fleeRate) * 100).toFixed(0)}%`
     : '—';
 
-  // [label, value, wide] — wide spans 2 columns
   const rows: [string, React.ReactNode, boolean][] = pokemonDetails ? [
     ['Classification', pokemonDetails.classification, true],
     ['Height', `${pokemonDetails.height?.minimum} – ${pokemonDetails.height?.maximum}`, false],
@@ -164,13 +150,13 @@ export const PokemonDialog: React.FC<PokemonDialogProps> = ({ open }) => {
       onClose={() => navigate(-1)}
       open={open}
       fullScreen={fullScreen}
-      BackdropProps={{ sx: { background: 'rgba(0,0,0,0.75)', backdropFilter: 'blur(6px)' } }}
+      BackdropProps={{ sx: { background: 'var(--c-backdrop)', backdropFilter: 'blur(4px)' } }}
       PaperProps={{
         sx: {
-          borderRadius: fullScreen ? 0 : '24px',
+          borderRadius: fullScreen ? 0 : '16px',
           overflow: 'hidden',
           minWidth: 340,
-          maxWidth: 440,
+          maxWidth: 420,
           width: '100%',
           background: 'var(--c-dialog)',
           border: '1px solid var(--c-rim-dialog)',
@@ -180,9 +166,9 @@ export const PokemonDialog: React.FC<PokemonDialogProps> = ({ open }) => {
       }}
     >
       {loading && (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', height: '260px', gap: '16px' }}>
-          <CircularProgress size={22} sx={{ color: 'var(--c-loading-text)' }} />
-          <span style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: '11px', color: 'var(--c-loading-text)', letterSpacing: '0.18em', textTransform: 'uppercase' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', height: '240px', gap: '14px' }}>
+          <CircularProgress size={20} sx={{ color: 'var(--c-text-3)' }} />
+          <span style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: '10px', color: 'var(--c-text-3)', letterSpacing: '0.14em', textTransform: 'uppercase' }}>
             Loading
           </span>
         </div>
@@ -191,12 +177,8 @@ export const PokemonDialog: React.FC<PokemonDialogProps> = ({ open }) => {
       {!loading && pokemonDetails?.name && (
         <div style={s.root}>
 
-          {/* Hero header */}
+          {/* Header */}
           <div style={s.header(accent)}>
-            {/* Atmospheric glow */}
-            <div aria-hidden="true" style={s.glow(accent)} />
-
-            {/* Close button */}
             <button
               onClick={() => navigate(-1)}
               style={s.closeBtn()}
@@ -204,28 +186,25 @@ export const PokemonDialog: React.FC<PokemonDialogProps> = ({ open }) => {
               onMouseLeave={e => (e.currentTarget.style.background = 'var(--c-close-btn)')}
               aria-label="Close"
             >
-              <span className="material-icons" style={{ color: 'var(--c-text-2)', fontSize: '17px' }}>close</span>
+              <span className="material-icons" style={{ color: 'var(--c-text-2)', fontSize: '15px' }}>close</span>
             </button>
 
-            {/* Circle background switches per theme via CSS var; multiply blend removes white bg in dark mode */}
+            {/* Sprite */}
             <div style={{
-              width: '118px',
-              height: '118px',
-              borderRadius: '50%',
+              width: '104px',
+              height: '104px',
+              borderRadius: '12px',
               background: 'var(--c-sprite-circle)',
-              boxShadow: `0 0 40px ${accent}55, 0 0 0 1px ${accent}20`,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               overflow: 'hidden',
-              position: 'relative',
-              zIndex: 1,
             }}>
               <img
                 src={pokemonDetails.image}
                 alt={pokemonDetails.name}
                 className="sprite-img"
-                style={{ width: '104px', height: '104px', objectFit: 'contain' }}
+                style={{ width: '96px', height: '96px', objectFit: 'contain' }}
               />
             </div>
           </div>
@@ -241,15 +220,15 @@ export const PokemonDialog: React.FC<PokemonDialogProps> = ({ open }) => {
                   <span
                     key={t}
                     style={{
-                      background: `${ta}18`,
+                      background: `${ta}14`,
                       color: ta,
-                      border: `1px solid ${ta}38`,
-                      borderRadius: '999px',
-                      padding: '4px 12px',
+                      border: `1px solid ${ta}28`,
+                      borderRadius: '6px',
+                      padding: '3px 10px',
                       fontSize: '11px',
-                      fontWeight: 600,
+                      fontWeight: 500,
                       lineHeight: 1,
-                      fontFamily: '"Figtree", sans-serif',
+                      fontFamily: '"Instrument Sans", sans-serif',
                     }}
                   >
                     {t}
@@ -259,7 +238,7 @@ export const PokemonDialog: React.FC<PokemonDialogProps> = ({ open }) => {
             </div>
           </div>
 
-          {/* Stats — 2-column grid, no scroll */}
+          {/* Stats grid */}
           <div style={s.statsGrid}>
             {rows.map(([label, value, wide]) => (
               <div key={label as string} style={s.statCell(wide)}>

@@ -4,18 +4,10 @@ export default {
   important: '#root',
   theme: {
     extend: {
-      colors: {
-        obsidian: '#070A12',
-        'glass': 'rgba(255,255,255,0.03)',
-        'glass-hover': 'rgba(255,255,255,0.06)',
-        'rim': 'rgba(255,255,255,0.07)',
-        'rim-bright': 'rgba(255,255,255,0.15)',
-        'ghost-white': 'rgba(255,255,255,0.06)',
-      },
       fontFamily: {
-        display: ['"Syne"', 'sans-serif'],
-        mono: ['"JetBrains Mono"', 'monospace'],
-        sans: ['"Figtree"', 'system-ui', 'sans-serif'],
+        display: ['"Bricolage Grotesque"', 'sans-serif'],
+        sans:    ['"Instrument Sans"', 'system-ui', 'sans-serif'],
+        mono:    ['"JetBrains Mono"', 'monospace'],
       },
     },
   },

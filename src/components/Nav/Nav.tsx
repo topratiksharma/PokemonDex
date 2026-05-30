@@ -47,7 +47,7 @@ export const Nav = () => {
             <span
               className="ml-3 whitespace-nowrap overflow-hidden text-[17px] leading-none"
               style={{
-                fontFamily: '"Syne", sans-serif',
+                fontFamily: '"Bricolage Grotesque", sans-serif',
                 fontWeight: 700,
                 letterSpacing: '-0.01em',
                 color: 'var(--c-wordmark)',
