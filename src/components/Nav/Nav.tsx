@@ -9,10 +9,22 @@ export const Nav = () => {
 
   return (
     <>
+      {/* Mobile backdrop — shown when nav is expanded on small screens */}
+      {!navCollapsed && (
+        <div
+          className="md:hidden fixed inset-0 bg-black/50 z-[99]"
+          onClick={toggleNav}
+          aria-hidden="true"
+        />
+      )}
+
+      {/* Sidebar */}
       <div
         className={clsx(
           'z-[100] bg-[#131924] fixed left-0 top-0 bottom-0 flex flex-col overflow-hidden transition-all duration-300 border-r border-white/[0.06] shadow-[4px_0_24px_rgba(0,0,0,0.3)]',
-          navCollapsed ? 'w-[81px]' : 'w-[320px]'
+          navCollapsed
+            ? '-translate-x-full md:translate-x-0 md:w-[81px]'
+            : 'translate-x-0 w-[280px] md:w-[320px]'
         )}
       >
         <nav id="main-nav" className="flex-1">
@@ -25,7 +37,7 @@ export const Nav = () => {
         </nav>
         <div className="flex items-center px-[18px] py-3 border-t border-white/10">
           <button
-            className="flex items-center w-full cursor-pointer overflow-hidden rounded-lg px-2 py-2 text-white/60 hover:bg-white/[0.06] hover:text-white/90 active:bg-white/10 transition-all duration-150"
+            className="hidden md:flex items-center w-full cursor-pointer overflow-hidden rounded-lg px-2 py-2 text-white/60 hover:bg-white/[0.06] hover:text-white/90 active:bg-white/10 transition-all duration-150"
             onClick={toggleNav}
             aria-label={navCollapsed ? 'Expand navigation' : 'Collapse navigation'}
             aria-expanded={!navCollapsed}
@@ -36,12 +48,23 @@ export const Nav = () => {
             </span>
             <span className="ml-4 whitespace-nowrap text-sm font-medium overflow-hidden">Collapse</span>
           </button>
+          {/* Mobile close button */}
+          <button
+            className="md:hidden flex items-center w-full cursor-pointer overflow-hidden rounded-lg px-2 py-2 text-white/60 hover:bg-white/[0.06] hover:text-white/90 active:bg-white/10 transition-all duration-150"
+            onClick={toggleNav}
+            aria-label="Close navigation"
+          >
+            <span className="material-icons shrink-0 text-[20px]">close</span>
+            <span className="ml-4 whitespace-nowrap text-sm font-medium overflow-hidden">Close</span>
+          </button>
         </div>
       </div>
+
+      {/* Desktop spacer — pushes content right to match sidebar width */}
       <div
         className={clsx(
-          'shrink-0 transition-all duration-300',
-          navCollapsed ? 'w-[81px]' : 'w-[320px]'
+          'hidden md:block shrink-0 transition-all duration-300',
+          navCollapsed ? 'md:w-[81px]' : 'md:w-[320px]'
         )}
       />
     </>

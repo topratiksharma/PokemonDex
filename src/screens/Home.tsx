@@ -22,7 +22,7 @@ export const Home = () => {
   }, []);
 
   return (
-    <div className="min-w-full min-h-full box-border px-[20%] py-6 lg:px-8 [&_p]:text-white/70 [&_hr]:my-6 [&_hr]:border-t [&_hr]:border-white/30 [&_hr]:border-b-0 [&_p]:leading-6 [&_li]:leading-6 [&_li]:mt-3">
+    <div className="min-w-full min-h-full box-border pt-16 md:pt-6 px-6 md:px-[10%] lg:px-8 [&_p]:text-white/70 [&_hr]:my-6 [&_hr]:border-t [&_hr]:border-white/30 [&_hr]:border-b-0 [&_p]:leading-6 [&_li]:leading-6 [&_li]:mt-3">
       {loading && <p>Loading...</p>}
       {error && <p>Failed to load content.</p>}
       {!loading && !error && (
