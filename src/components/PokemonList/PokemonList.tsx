@@ -10,9 +10,7 @@ export const PokemonList = () => {
   const [debouncedSearch, setDebouncedSearch] = useState('');
   const [filteredPokemons, setFilteredPokemons] = useState<Pokemon[]>([]);
 
-  useEffect(() => {
-    setFilteredPokemons(pokemons);
-  }, [pokemons]);
+  useEffect(() => { setFilteredPokemons(pokemons); }, [pokemons]);
 
   useEffect(() => {
     const t = setTimeout(() => setDebouncedSearch(searchValue), 300);
@@ -20,15 +18,11 @@ export const PokemonList = () => {
   }, [searchValue]);
 
   useEffect(() => {
-    if (debouncedSearch) {
-      setFilteredPokemons(
-        pokemons.filter((p) =>
-          p.name.toLowerCase().includes(debouncedSearch.toLowerCase())
-        )
-      );
-    } else {
-      setFilteredPokemons(pokemons);
-    }
+    setFilteredPokemons(
+      debouncedSearch
+        ? pokemons.filter(p => p.name.toLowerCase().includes(debouncedSearch.toLowerCase()))
+        : pokemons
+    );
   }, [debouncedSearch, pokemons]);
 
   return (
@@ -38,13 +32,13 @@ export const PokemonList = () => {
         <div
           className="sticky top-0 z-[2] flex items-center justify-between gap-4 py-3 pl-14 pr-4 md:px-6"
           style={{
-            background: 'rgba(7,10,18,0.8)',
+            background: 'var(--c-header-bar)',
             backdropFilter: 'blur(20px)',
-            borderBottom: '1px solid rgba(255,255,255,0.05)',
+            borderBottom: '1px solid var(--c-rim-header)',
           }}
         >
           <div className="relative flex-1 max-w-md">
-            <span className="material-icons absolute left-3 top-1/2 -translate-y-1/2 !text-white/25 text-[18px] pointer-events-none">
+            <span className="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-[18px] pointer-events-none">
               search
             </span>
             <label htmlFor="search" className="sr-only">Search Pokémon</label>
@@ -53,43 +47,34 @@ export const PokemonList = () => {
               id="search"
               placeholder="Search…"
               value={searchValue}
-              onChange={(e) => setSearchValue(e.target.value)}
-              className="w-full pl-9 pr-9 py-2 text-[14px] rounded-xl outline-none transition-all duration-200"
+              onChange={e => setSearchValue(e.target.value)}
+              className="search-input w-full pl-9 pr-9 py-2 text-[14px] rounded-xl outline-none transition-all duration-200"
               style={{
-                background: 'rgba(255,255,255,0.05)',
-                border: '1px solid rgba(255,255,255,0.09)',
-                color: 'rgba(255,255,255,0.85)',
+                background: 'var(--c-search)',
+                border: '1px solid var(--c-rim-search)',
+                color: 'var(--c-text)',
                 fontFamily: '"Figtree", sans-serif',
-              }}
-              onFocus={e => {
-                e.currentTarget.style.border = '1px solid rgba(255,255,255,0.22)';
-                e.currentTarget.style.background = 'rgba(255,255,255,0.07)';
-              }}
-              onBlur={e => {
-                e.currentTarget.style.border = '1px solid rgba(255,255,255,0.09)';
-                e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
               }}
             />
             {searchValue && (
               <button
                 onClick={() => setSearchValue('')}
                 className="absolute right-2.5 top-1/2 -translate-y-1/2 flex items-center justify-center w-5 h-5 rounded-full transition-all"
-                style={{ background: 'rgba(255,255,255,0.1)' }}
+                style={{ background: 'var(--c-rim)' }}
               >
-                <span className="material-icons !text-white/40 text-[13px]">close</span>
+                <span className="material-icons text-[13px]">close</span>
               </button>
             )}
           </div>
 
-          {/* Count */}
           {filteredPokemons.length > 0 && (
             <span
               className="shrink-0 text-[11px] tabular-nums px-3 py-1.5 rounded-full"
               style={{
                 fontFamily: '"JetBrains Mono", monospace',
-                color: 'rgba(255,255,255,0.28)',
-                background: 'rgba(255,255,255,0.05)',
-                border: '1px solid rgba(255,255,255,0.07)',
+                color: 'var(--c-count-text)',
+                background: 'var(--c-count-bg)',
+                border: '1px solid var(--c-rim-count)',
               }}
             >
               {filteredPokemons.length}
@@ -102,10 +87,10 @@ export const PokemonList = () => {
       <div className="flex-1 px-4 pt-5 pb-12">
         {loading && (
           <div className="flex flex-col items-center justify-center mt-24 gap-4">
-            <CircularProgress size={24} sx={{ color: 'rgba(255,255,255,0.2)' }} />
+            <CircularProgress size={24} sx={{ color: 'var(--c-loading-text)' }} />
             <p
               className="text-[11px] tracking-[0.18em] uppercase"
-              style={{ fontFamily: '"JetBrains Mono", monospace', color: 'rgba(255,255,255,0.2)' }}
+              style={{ fontFamily: '"JetBrains Mono", monospace', color: 'var(--c-loading-text)' }}
             >
               Loading
             </p>
@@ -114,17 +99,15 @@ export const PokemonList = () => {
 
         {error && (
           <div className="flex flex-col items-center justify-center mt-24">
-            <span className="material-icons !text-white/20 text-4xl mb-3">wifi_off</span>
-            <p className="text-[14px]" style={{ color: 'rgba(255,255,255,0.3)' }}>
-              Failed to load Pokémon.
-            </p>
+            <span className="material-icons text-4xl mb-3">wifi_off</span>
+            <p className="text-[14px]" style={{ color: 'var(--c-text-2)' }}>Failed to load Pokémon.</p>
           </div>
         )}
 
         {!loading && !error && filteredPokemons.length === 0 && debouncedSearch && (
           <div className="flex flex-col items-center justify-center mt-24">
-            <span className="material-icons !text-white/15 text-5xl mb-4">search_off</span>
-            <p className="text-[15px] font-semibold" style={{ color: 'rgba(255,255,255,0.5)' }}>
+            <span className="material-icons text-5xl mb-4">search_off</span>
+            <p className="text-[15px] font-semibold" style={{ color: 'var(--c-text-2)' }}>
               No results for "{debouncedSearch}"
             </p>
           </div>
@@ -136,7 +119,7 @@ export const PokemonList = () => {
               <Link
                 key={pkmn.id}
                 to={`/pokemon/${pkmn.id}`}
-                className="rounded-2xl focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+                className="rounded-2xl focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-offset-2"
                 aria-label={`View ${pkmn.name}`}
               >
                 <PokemonCard

@@ -44,8 +44,8 @@ const s = {
     paddingLeft: '24px',
     paddingRight: '24px',
     flexShrink: 0,
-    background: `linear-gradient(160deg, ${accent}22 0%, rgba(12,18,32,0) 55%)`,
-    borderBottom: '1px solid rgba(255,255,255,0.06)',
+    background: `linear-gradient(160deg, ${accent}22 0%, transparent 55%)`,
+    borderBottom: '1px solid var(--c-rim-nav)',
   }),
   glow: (accent: string): React.CSSProperties => ({
     position: 'absolute',
@@ -67,8 +67,8 @@ const s = {
     width: '28px',
     height: '28px',
     borderRadius: '50%',
-    background: 'rgba(255,255,255,0.07)',
-    border: '1px solid rgba(255,255,255,0.1)',
+    background: 'var(--c-close-btn)',
+    border: '1px solid var(--c-rim)',
     cursor: 'pointer',
     transition: 'background 0.15s ease',
   }),
@@ -82,7 +82,7 @@ const s = {
   number: {
     fontFamily: '"JetBrains Mono", monospace',
     fontSize: '10px',
-    color: 'rgba(255,255,255,0.22)',
+    color: 'var(--c-text-3)',
     letterSpacing: '0.15em',
     marginBottom: '4px',
   },
@@ -90,7 +90,7 @@ const s = {
     fontFamily: '"Syne", sans-serif',
     fontWeight: 700,
     fontSize: '26px',
-    color: 'rgba(255,255,255,0.95)',
+    color: 'var(--c-text)',
     letterSpacing: '-0.02em',
     lineHeight: 1,
     marginBottom: '8px',
@@ -106,20 +106,20 @@ const s = {
     display: 'grid' as const,
     gridTemplateColumns: '1fr 1fr',
     gap: '1px',
-    background: 'rgba(255,255,255,0.05)',
-    borderTop: '1px solid rgba(255,255,255,0.05)',
+    background: 'var(--c-rim-stat)',
+    borderTop: '1px solid var(--c-rim-stat)',
   },
   statCell: (wide: boolean): React.CSSProperties => ({
     display: 'flex',
     flexDirection: 'column',
     gap: '1px',
     padding: '8px 14px',
-    background: '#0C1220',
+    background: 'var(--c-stat-cell)',
     gridColumn: wide ? 'span 2' : 'span 1',
   }),
   statLabel: {
     fontSize: '9.5px',
-    color: 'rgba(255,255,255,0.28)',
+    color: 'var(--c-text-stat-label)',
     fontFamily: '"JetBrains Mono", monospace',
     letterSpacing: '0.08em',
     textTransform: 'uppercase' as const,
@@ -127,7 +127,7 @@ const s = {
   statValue: {
     fontSize: '12.5px',
     fontWeight: 600,
-    color: 'rgba(255,255,255,0.88)',
+    color: 'var(--c-text-stat-value)',
     lineHeight: 1.3,
     fontFamily: '"Figtree", sans-serif',
   },
@@ -172,17 +172,17 @@ export const PokemonDialog: React.FC<PokemonDialogProps> = ({ open }) => {
           minWidth: 340,
           maxWidth: 440,
           width: '100%',
-          background: '#0C1220',
-          border: '1px solid rgba(255,255,255,0.08)',
-          boxShadow: '0 32px 80px rgba(0,0,0,0.85)',
+          background: 'var(--c-dialog)',
+          border: '1px solid var(--c-rim-dialog)',
+          boxShadow: 'var(--c-dialog-shadow)',
           margin: fullScreen ? 0 : '16px',
         },
       }}
     >
       {loading && (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', height: '260px', gap: '16px' }}>
-          <CircularProgress size={22} sx={{ color: 'rgba(255,255,255,0.2)' }} />
-          <span style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: '11px', color: 'rgba(255,255,255,0.2)', letterSpacing: '0.18em', textTransform: 'uppercase' }}>
+          <CircularProgress size={22} sx={{ color: 'var(--c-loading-text)' }} />
+          <span style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: '11px', color: 'var(--c-loading-text)', letterSpacing: '0.18em', textTransform: 'uppercase' }}>
             Loading
           </span>
         </div>
@@ -200,19 +200,19 @@ export const PokemonDialog: React.FC<PokemonDialogProps> = ({ open }) => {
             <button
               onClick={() => navigate(-1)}
               style={s.closeBtn()}
-              onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.12)')}
-              onMouseLeave={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.07)')}
+              onMouseEnter={e => (e.currentTarget.style.background = 'var(--c-close-btn-hover)')}
+              onMouseLeave={e => (e.currentTarget.style.background = 'var(--c-close-btn)')}
               aria-label="Close"
             >
-              <span className="material-icons" style={{ color: 'rgba(255,255,255,0.45)', fontSize: '17px' }}>close</span>
+              <span className="material-icons" style={{ color: 'var(--c-text-2)', fontSize: '17px' }}>close</span>
             </button>
 
-            {/* White circle isolates the image so multiply blend removes its white bg */}
+            {/* Circle background switches per theme via CSS var; multiply blend removes white bg in dark mode */}
             <div style={{
               width: '118px',
               height: '118px',
               borderRadius: '50%',
-              background: 'rgba(255,255,255,0.92)',
+              background: 'var(--c-sprite-circle)',
               boxShadow: `0 0 40px ${accent}55, 0 0 0 1px ${accent}20`,
               display: 'flex',
               alignItems: 'center',
@@ -224,13 +224,8 @@ export const PokemonDialog: React.FC<PokemonDialogProps> = ({ open }) => {
               <img
                 src={pokemonDetails.image}
                 alt={pokemonDetails.name}
-                style={{
-                  width: '104px',
-                  height: '104px',
-                  objectFit: 'contain',
-                  mixBlendMode: 'multiply',
-                  display: 'block',
-                }}
+                className="sprite-img"
+                style={{ width: '104px', height: '104px', objectFit: 'contain' }}
               />
             </div>
           </div>

@@ -1,18 +1,19 @@
 import React from 'react';
-import { useLayout, useToggleNav } from '../../contexts';
+import { useLayout, useToggleNav, useColorScheme } from '../../contexts';
 import clsx from 'clsx';
 import { NavOption } from './NavOption';
 
 export const Nav = () => {
   const { navCollapsed } = useLayout();
   const toggleNav = useToggleNav();
+  const { colorScheme, toggleColorScheme } = useColorScheme();
 
   return (
     <>
       {!navCollapsed && (
         <div
           className="md:hidden fixed inset-0 z-[99]"
-          style={{ background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)' }}
+          style={{ background: 'var(--c-backdrop)', backdropFilter: 'blur(4px)' }}
           onClick={toggleNav}
           aria-hidden="true"
         />
@@ -26,8 +27,8 @@ export const Nav = () => {
             : 'translate-x-0 w-[220px] md:w-[220px]'
         )}
         style={{
-          background: 'rgba(7, 10, 18, 0.88)',
-          borderRight: '1px solid rgba(255,255,255,0.06)',
+          background: 'var(--c-nav)',
+          borderRight: '1px solid var(--c-rim-nav)',
           backdropFilter: 'blur(20px)',
         }}
       >
@@ -35,16 +36,22 @@ export const Nav = () => {
           {/* Wordmark */}
           <div
             className="flex items-center px-3.5 py-4 mb-2"
-            style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}
+            style={{ borderBottom: '1px solid var(--c-rim-nav)' }}
           >
             <img
               src="/pokeball-white.png"
-              className="w-7 shrink-0 opacity-60"
+              className="w-7 shrink-0"
+              style={{ filter: 'var(--c-logo-filter)' }}
               alt=""
             />
             <span
-              className="ml-3 whitespace-nowrap overflow-hidden text-white/90 text-[17px] leading-none"
-              style={{ fontFamily: '"Syne", sans-serif', fontWeight: 700, letterSpacing: '-0.01em' }}
+              className="ml-3 whitespace-nowrap overflow-hidden text-[17px] leading-none"
+              style={{
+                fontFamily: '"Syne", sans-serif',
+                fontWeight: 700,
+                letterSpacing: '-0.01em',
+                color: 'var(--c-wordmark)',
+              }}
             >
               Pokédex
             </span>
@@ -54,25 +61,52 @@ export const Nav = () => {
           <NavOption to="/pokemon" icon="grid_view" name="Pokémon">Pokémon</NavOption>
         </nav>
 
-        <div
-          className="px-2.5 py-3"
-          style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}
-        >
+        {/* Theme toggle */}
+        <div className="px-2.5 pb-1" style={{ borderTop: '1px solid var(--c-rim-nav)' }}>
+          <button
+            className="flex items-center w-full rounded-xl px-2.5 py-2.5 transition-all duration-150"
+            onClick={toggleColorScheme}
+            aria-label={`Switch to ${colorScheme === 'dark' ? 'light' : 'dark'} mode`}
+            onMouseEnter={e => (e.currentTarget.style.background = 'var(--c-nav-hover)')}
+            onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+          >
+            <span
+              className="material-icons text-[19px] shrink-0"
+              style={{ color: 'var(--c-toggle-icon)' }}
+            >
+              {colorScheme === 'dark' ? 'light_mode' : 'dark_mode'}
+            </span>
+            <span
+              className="ml-3 whitespace-nowrap text-[13px] font-semibold overflow-hidden"
+              style={{ color: 'var(--c-collapse-text)' }}
+            >
+              {colorScheme === 'dark' ? 'Light mode' : 'Dark mode'}
+            </span>
+          </button>
+        </div>
+
+        {/* Collapse / close */}
+        <div className="px-2.5 py-2.5">
           <button
             className="hidden md:flex items-center w-full rounded-xl px-2.5 py-2 transition-all duration-150"
-            style={{ color: 'rgba(255,255,255,0.3)' }}
-            onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.05)')}
+            onMouseEnter={e => (e.currentTarget.style.background = 'var(--c-nav-hover)')}
             onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
             onClick={toggleNav}
             aria-label={navCollapsed ? 'Expand' : 'Collapse'}
           >
             <span
-              className="material-icons !text-white/30 text-[18px] shrink-0 transition-transform duration-300"
-              style={{ transform: navCollapsed ? 'rotate(0deg)' : 'rotate(180deg)' }}
+              className="material-icons text-[18px] shrink-0 transition-transform duration-300"
+              style={{
+                color: 'var(--c-toggle-icon)',
+                transform: navCollapsed ? 'rotate(0deg)' : 'rotate(180deg)',
+              }}
             >
               chevron_left
             </span>
-            <span className="ml-3 whitespace-nowrap text-[13px] font-medium overflow-hidden text-white/40">
+            <span
+              className="ml-3 whitespace-nowrap text-[13px] font-medium overflow-hidden"
+              style={{ color: 'var(--c-collapse-text)' }}
+            >
               Collapse
             </span>
           </button>
@@ -80,8 +114,8 @@ export const Nav = () => {
             className="md:hidden flex items-center w-full rounded-xl px-2.5 py-2 transition-all duration-150"
             onClick={toggleNav}
           >
-            <span className="material-icons !text-white/30 text-[18px] shrink-0">close</span>
-            <span className="ml-3 whitespace-nowrap text-[13px] font-medium text-white/40">Close</span>
+            <span className="material-icons text-[18px] shrink-0" style={{ color: 'var(--c-toggle-icon)' }}>close</span>
+            <span className="ml-3 whitespace-nowrap text-[13px] font-medium" style={{ color: 'var(--c-collapse-text)' }}>Close</span>
           </button>
         </div>
       </div>
