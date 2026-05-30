@@ -198,7 +198,7 @@ import remarkGfm from 'remark-gfm'
 **Key config:**
 ```js
 // tailwind.config.js
-module.exports = {
+export default {
   content: ['./index.html', './src/**/*.{ts,tsx}'],
   important: '#root',
   theme: {
@@ -211,7 +211,7 @@ module.exports = {
 }
 ```
 
-> Note: Use `module.exports` (CJS), not `export default` (ESM). Tailwind v3's CLI expects CommonJS config by default when using PostCSS.
+> Note: Use `export default` (ESM) because `"type": "module"` is set in `package.json` (required for Vite 5 + `@vitejs/plugin-react`).
 
 ---
 
