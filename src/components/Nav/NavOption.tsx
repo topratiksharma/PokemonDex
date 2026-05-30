@@ -13,20 +13,39 @@ export const NavOption: React.FC<NavOptionProps> = ({ to, icon, name, children }
   return (
     <NavLink
       to={to}
+      end={to === '/'}
       title={name}
-      className={({ isActive }) =>
-        clsx(
-          'w-full flex items-center h-12 no-underline overflow-hidden mx-2 rounded-lg transition-all duration-150',
-          isActive
-            ? 'bg-white/10 border-l-[3px] border-blue-400 text-white'
-            : 'text-white/60 hover:bg-white/[0.06] hover:text-white/90'
-        )
-      }
+      className="block w-full no-underline px-2 mb-0.5"
     >
-      <span className="material-icons flex items-center justify-center w-[45px] min-w-[45px] text-[20px]">
-        {icon}
-      </span>
-      <span className="ml-2 whitespace-nowrap text-sm font-medium">{children}</span>
+      {({ isActive }) => (
+        <div
+          className={clsx(
+            'flex items-center h-10 rounded-xl transition-all duration-150',
+            isActive ? '' : 'hover:opacity-100'
+          )}
+          style={{
+            background: isActive ? 'rgba(255,255,255,0.09)' : 'transparent',
+            borderLeft: isActive ? '2px solid rgba(255,255,255,0.6)' : '2px solid transparent',
+          }}
+          onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; }}
+          onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = 'transparent'; }}
+        >
+          <span
+            className={clsx(
+              'material-icons flex items-center justify-center w-[40px] min-w-[40px] text-[19px] transition-colors'
+            )}
+            style={{ color: isActive ? 'rgba(255,255,255,0.85)' : 'rgba(255,255,255,0.28)' }}
+          >
+            {icon}
+          </span>
+          <span
+            className="ml-0.5 whitespace-nowrap text-[13px] font-semibold tracking-wide overflow-hidden"
+            style={{ color: isActive ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.35)' }}
+          >
+            {children}
+          </span>
+        </div>
+      )}
     </NavLink>
   );
 };

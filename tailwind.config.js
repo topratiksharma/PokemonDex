@@ -5,11 +5,17 @@ export default {
   theme: {
     extend: {
       colors: {
-        'bg-primary': '#171E2B',
-        'bg-secondary': '#131924',
+        obsidian: '#070A12',
+        'glass': 'rgba(255,255,255,0.03)',
+        'glass-hover': 'rgba(255,255,255,0.06)',
+        'rim': 'rgba(255,255,255,0.07)',
+        'rim-bright': 'rgba(255,255,255,0.15)',
+        'ghost-white': 'rgba(255,255,255,0.06)',
       },
       fontFamily: {
-        poppins: ['Poppins', 'sans-serif'],
+        display: ['"Syne"', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'monospace'],
+        sans: ['"Figtree"', 'system-ui', 'sans-serif'],
       },
     },
   },

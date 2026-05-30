@@ -1,24 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const TYPE_BG: Record<string, string> = {
-  bug:      'bg-[#F6D6A7]',
-  dragon:   'bg-[#FBE3DF]',
-  electric: 'bg-[#ffffa1]',
-  fairy:    'bg-[#ffc0cb]',
-  fighting: 'bg-[#a1a6f9]',
-  fire:     'bg-[#FFC107]',
-  ghost:    'bg-[#e8d5f5]',
-  grass:    'bg-[#E2F9E1]',
-  ground:   'bg-[#d4c5a9]',
-  ice:      'bg-[#b3e8f0]',
-  normal:   'bg-[#f0ede8]',
-  poison:   'bg-[#eac6f7]',
-  psychic:  'bg-[#CDDC39]',
-  rock:     'bg-[#c49393]',
-  water:    'bg-[#b4defb]',
-  flying:   'bg-slate-200',
-  steel:    'bg-slate-300',
-  dark:     'bg-[#a08070]',
+const TYPE_ACCENT: Record<string, string> = {
+  bug:      '#84CC16',
+  dragon:   '#8B5CF6',
+  electric: '#EAB308',
+  fairy:    '#F472B6',
+  fighting: '#EF4444',
+  fire:     '#F97316',
+  ghost:    '#818CF8',
+  grass:    '#4ADE80',
+  ground:   '#F59E0B',
+  ice:      '#22D3EE',
+  normal:   '#94A3B8',
+  poison:   '#C084FC',
+  psychic:  '#FB7185',
+  rock:     '#A8A29E',
+  water:    '#38BDF8',
+  flying:   '#7DD3FC',
+  steel:    '#93C5FD',
+  dark:     '#A8A29E',
 };
 
 type Props = {
@@ -27,34 +27,97 @@ type Props = {
   image: string;
   types: string[];
   number: number;
+  animationDelay?: number;
 };
 
-export const PokemonCard: React.FC<Props> = ({ id, name, image, types, number }) => {
-  const typeBg = TYPE_BG[types[0]?.toLowerCase()] ?? 'bg-white';
+export const PokemonCard: React.FC<Props> = ({ name, image, types, number, animationDelay = 0 }) => {
+  const [hovered, setHovered] = useState(false);
+  const primaryType = types[0]?.toLowerCase() ?? 'normal';
+  const accent = TYPE_ACCENT[primaryType] ?? '#94A3B8';
 
   return (
     <div
-      className={`${typeBg} flex flex-col items-center justify-center m-[0.3rem] min-w-[160px] py-6 rounded-2xl border border-black/5 shadow-md text-center z-[1] hover:scale-[1.05] hover:shadow-xl transition-all duration-200`}
+      className="pokemon-card-appear relative flex flex-col items-center pt-3 pb-4 px-3 rounded-2xl overflow-hidden cursor-pointer"
+      style={{
+        background: hovered ? 'rgba(255,255,255,0.055)' : 'rgba(255,255,255,0.03)',
+        border: `1px solid ${hovered ? `${accent}35` : 'rgba(255,255,255,0.07)'}`,
+        boxShadow: hovered
+          ? `0 0 0 1px ${accent}18, 0 20px 60px rgba(0,0,0,0.5), 0 0 80px ${accent}0A`
+          : '0 2px 12px rgba(0,0,0,0.3)',
+        transition: 'all 0.22s ease',
+        animationDelay: `${animationDelay}ms`,
+        backdropFilter: 'blur(8px)',
+      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
-      <span className="text-[#3e3232] text-[14px] font-bold self-end pr-2">
-        {'#' + String(number).padStart(3, '0')}
+      {/* Radial type-glow behind sprite */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          bottom: '18%',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: '90%',
+          height: '55%',
+          background: `radial-gradient(ellipse, ${accent}${hovered ? '2A' : '16'} 0%, transparent 72%)`,
+          transition: 'all 0.3s ease',
+          pointerEvents: 'none',
+        }}
+      />
+
+      {/* Number */}
+      <span
+        className="self-end leading-none mb-2 tabular-nums text-[10px]"
+        style={{
+          fontFamily: '"JetBrains Mono", monospace',
+          color: 'rgba(255,255,255,0.2)',
+          letterSpacing: '0.05em',
+        }}
+      >
+        #{String(number).padStart(3, '0')}
       </span>
+
+      {/* Sprite */}
       <img
         src={image}
         alt={name}
-        className="w-[120px] h-[120px] object-contain drop-shadow-[0_4px_10px_rgba(0,0,0,0.3)]"
+        className="w-[98px] h-[98px] object-contain relative z-10"
+        style={{
+          filter: hovered
+            ? `drop-shadow(0 0 18px ${accent}80)`
+            : 'drop-shadow(0 4px 14px rgba(0,0,0,0.55))',
+          transform: hovered ? 'scale(1.07) translateY(-3px)' : 'scale(1)',
+          transition: 'all 0.25s ease',
+        }}
       />
-      <div className="flex flex-col w-full mt-1">
-        <h3 className="mb-[0.2rem] text-black font-semibold">{name}</h3>
-        <div className="flex justify-center gap-1 flex-wrap px-2">
-          {types.map((t) => (
-            <span
-              key={t}
-              className="rounded-full px-2 py-0.5 text-[11px] font-semibold bg-black/25 text-black/90"
-            >
-              {t}
-            </span>
-          ))}
+
+      {/* Info */}
+      <div className="mt-3 text-center w-full relative z-10">
+        <h3
+          className="text-[13px] mb-1.5 capitalize"
+          style={{ color: 'rgba(255,255,255,0.88)', fontWeight: 600 }}
+        >
+          {name}
+        </h3>
+        <div className="flex justify-center gap-1 flex-wrap">
+          {types.map((t) => {
+            const ta = TYPE_ACCENT[t.toLowerCase()] ?? '#94A3B8';
+            return (
+              <span
+                key={t}
+                className="rounded-full px-2 py-0.5 text-[9.5px] font-semibold leading-none"
+                style={{
+                  background: `${ta}18`,
+                  color: ta,
+                  border: `1px solid ${ta}30`,
+                }}
+              >
+                {t}
+              </span>
+            );
+          })}
         </div>
       </div>
     </div>
