@@ -17,7 +17,7 @@ export const PokemonCard: React.FC<Props> = ({
   types,
   number,
 }) => {
-  const classes: any = useStyles();
+  const classes = useStyles() as Record<string, string>;
 
   return (
     <div>
@@ -27,7 +27,7 @@ export const PokemonCard: React.FC<Props> = ({
           classes.thumbContainer + ' ' + classes[types[0].toLowerCase()]
         }
       >
-        <label className={classes.number}>{'#0' + number}</label>
+        <label className={classes.number}>{'#' + String(number).padStart(3, '0')}</label>
         <img src={image} alt={name} className={classes.img}></img>
         <div className={classes.detailWrapper}>
           <h3 className={classes.label}>{name}</h3>

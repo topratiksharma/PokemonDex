@@ -1,12 +1,12 @@
 import React from 'react';
 import { createUseStyles } from 'react-jss';
-import { BrowserRouter, Routes, Route, HashRouter } from 'react-router-dom';
+import { Routes, Route, HashRouter } from 'react-router-dom';
 import { LayoutProvider } from '../contexts';
 import { Nav } from '../components';
 import { ApolloProvider } from '@apollo/client/react';
 import { client } from './client';
 import { ListPage, Home } from '../screens';
-import { PokemonDialog } from '../components/PokemonDialog';
+import { PokemonDialog } from '../components';
 
 function App() {
   const classes = useStyles();

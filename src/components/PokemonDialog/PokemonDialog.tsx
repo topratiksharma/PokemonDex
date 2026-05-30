@@ -38,7 +38,7 @@ export const PokemonDialog: React.FC<PokemonDialogProps> = ({ open }) => {
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
   const navigate = useNavigate();
 
-  const classes: any = useStyles();
+  const classes = useStyles();
 
   return (
     <Dialog onClose={() => navigate(-1)} open={open} fullScreen={fullScreen}>
@@ -54,7 +54,7 @@ export const PokemonDialog: React.FC<PokemonDialogProps> = ({ open }) => {
                 <CloseOutlined color="success" />
               </IconButton>
             </Tooltip>
-            <DialogTitle classes={classes.title}>
+            <DialogTitle>
               {pokemonDetails.name}
             </DialogTitle>
             <CardActionArea>

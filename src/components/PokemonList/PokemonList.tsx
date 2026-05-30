@@ -1,5 +1,5 @@
 import { Box, Button, CircularProgress } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { Link, Outlet } from 'react-router-dom';
 import { Pokemon, useGetPokemons } from '../../hooks/useGetPokemons';
@@ -7,27 +7,31 @@ import { PokemonCard } from '../PokemonCard';
 
 export const PokemonList = () => {
   const classes: any = useStyles();
-  const { pokemons, loading } = useGetPokemons();
-  const [filteredPokemons, setFilteredPokemons] = useState<
-    Pokemon[] | undefined
-  >();
+  const { pokemons, loading, error } = useGetPokemons();
+  const [searchValue, setSearchValue] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
+  const [filteredPokemons, setFilteredPokemons] = useState<Pokemon[]>([]);
 
   useEffect(() => {
     setFilteredPokemons(pokemons);
   }, [pokemons]);
 
-  const handleChange = () => {
-    const searchParam: any = document.getElementById('search');
-    if (searchParam.value) {
-      // filter with params
-      const filteredPok = pokemons.filter((pkmn) =>
-        pkmn.name.toLowerCase().includes(searchParam.value.toLowerCase())
+  useEffect(() => {
+    const t = setTimeout(() => setDebouncedSearch(searchValue), 300);
+    return () => clearTimeout(t);
+  }, [searchValue]);
+
+  useEffect(() => {
+    if (debouncedSearch) {
+      setFilteredPokemons(
+        pokemons.filter((p) =>
+          p.name.toLowerCase().includes(debouncedSearch.toLowerCase())
+        )
       );
-      setFilteredPokemons(filteredPok);
     } else {
       setFilteredPokemons(pokemons);
     }
-  };
+  }, [debouncedSearch, pokemons]);
 
   return (
     <div className={classes.root}>
@@ -37,21 +41,22 @@ export const PokemonList = () => {
             <input
               type="text"
               id="search"
-              placeholder="Search"
-              onChange={handleChange}
+              placeholder="Search Pokémon"
+              aria-label="Search Pokémon"
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
               className={classes.search}
             />
           </div>
         )}
         <div className={classes.allContainer}>
           {loading && (
-            <div>
-              <Box sx={{ display: 'flex' }}>
-                <CircularProgress />
-              </Box>
-            </div>
+            <Box sx={{ display: 'flex' }}>
+              <CircularProgress />
+            </Box>
           )}
-          {filteredPokemons?.map((pkmn) => (
+          {error && <p>Failed to load Pokémon. Please try again.</p>}
+          {filteredPokemons.map((pkmn) => (
             <Button component={Link} to={`/pokemon/${pkmn.id}`} key={pkmn.id}>
               <PokemonCard
                 id={pkmn.id}
@@ -59,12 +64,12 @@ export const PokemonList = () => {
                 image={pkmn.image}
                 name={pkmn.name}
                 types={pkmn.types}
-              ></PokemonCard>
+              />
             </Button>
           ))}
         </div>
       </div>
-      <Outlet></Outlet>
+      <Outlet />
     </div>
   );
 };
@@ -89,8 +94,8 @@ const useStyles = createUseStyles(
       height: '2rem',
       padding: '5px 10px',
       width: '84vw',
-      '@media (max-width: 1362px)': { width: '74vw' },
-      '@media (max-width: 848px)': { width: '58vw' },
+      '@media (max-width: 1280px)': { width: '74vw' },
+      '@media (max-width: 768px)': { width: '58vw' },
     },
     searchComponent: {
       alignItems: 'center',

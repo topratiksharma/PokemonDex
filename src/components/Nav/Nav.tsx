@@ -12,9 +12,9 @@ export const Nav = () => {
   return (
     <>
       <div className={classes.root}>
-        <div className={classes.main}>
+        <nav id="main-nav" className={classes.main}>
           <div className={classes.title}>
-            <img src="/pokeball-white.png" className={classes.img} />
+            <img src="/pokeball-white.png" className={classes.img} alt="Pokéball logo" />
             <h3>Pokémon</h3>
           </div>
           <NavOption to="/" icon="home" name="Home">
@@ -23,9 +23,15 @@ export const Nav = () => {
           <NavOption to="/pokemon" icon="list" name="List">
             List
           </NavOption>
-        </div>
+        </nav>
         <div className={classes.bottom}>
-          <button className={classes.expandBtn} onClick={() => toggleNav()}>
+          <button
+            className={classes.expandBtn}
+            onClick={() => toggleNav()}
+            aria-label={navCollapsed ? 'Expand navigation' : 'Collapse navigation'}
+            aria-expanded={!navCollapsed}
+            aria-controls="main-nav"
+          >
             <span
               title={navCollapsed ? 'Expand' : 'Collapse'}
               className={clsx(classes.btnIcon, 'material-icons')}
