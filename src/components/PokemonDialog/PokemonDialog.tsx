@@ -207,18 +207,32 @@ export const PokemonDialog: React.FC<PokemonDialogProps> = ({ open }) => {
               <span className="material-icons" style={{ color: 'rgba(255,255,255,0.45)', fontSize: '17px' }}>close</span>
             </button>
 
-            <img
-              src={pokemonDetails.image}
-              alt={pokemonDetails.name}
-              style={{
-                width: '112px',
-                height: '112px',
-                objectFit: 'contain',
-                position: 'relative',
-                zIndex: 1,
-                filter: `drop-shadow(0 0 32px ${accent}65)`,
-              }}
-            />
+            {/* White circle isolates the image so multiply blend removes its white bg */}
+            <div style={{
+              width: '118px',
+              height: '118px',
+              borderRadius: '50%',
+              background: 'rgba(255,255,255,0.92)',
+              boxShadow: `0 0 40px ${accent}55, 0 0 0 1px ${accent}20`,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              overflow: 'hidden',
+              position: 'relative',
+              zIndex: 1,
+            }}>
+              <img
+                src={pokemonDetails.image}
+                alt={pokemonDetails.name}
+                style={{
+                  width: '104px',
+                  height: '104px',
+                  objectFit: 'contain',
+                  mixBlendMode: 'multiply',
+                  display: 'block',
+                }}
+              />
+            </div>
           </div>
 
           {/* Identity */}

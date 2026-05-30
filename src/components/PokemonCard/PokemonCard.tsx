@@ -79,19 +79,36 @@ export const PokemonCard: React.FC<Props> = ({ name, image, types, number, anima
         #{String(number).padStart(3, '0')}
       </span>
 
-      {/* Sprite */}
-      <img
-        src={image}
-        alt={name}
-        className="w-[98px] h-[98px] object-contain relative z-10"
+      {/* Sprite — white circle removes JPEG white bg via multiply blend */}
+      <div
         style={{
-          filter: hovered
-            ? `drop-shadow(0 0 18px ${accent}80)`
-            : 'drop-shadow(0 4px 14px rgba(0,0,0,0.55))',
+          width: '90px',
+          height: '90px',
+          borderRadius: '50%',
+          background: 'rgba(255,255,255,0.88)',
+          boxShadow: hovered ? `0 0 28px ${accent}55` : `0 0 14px ${accent}28`,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          overflow: 'hidden',
+          position: 'relative',
+          zIndex: 1,
           transform: hovered ? 'scale(1.07) translateY(-3px)' : 'scale(1)',
           transition: 'all 0.25s ease',
         }}
-      />
+      >
+        <img
+          src={image}
+          alt={name}
+          style={{
+            width: '80px',
+            height: '80px',
+            objectFit: 'contain',
+            mixBlendMode: 'multiply',
+            display: 'block',
+          }}
+        />
+      </div>
 
       {/* Info */}
       <div className="mt-3 text-center w-full relative z-10">
