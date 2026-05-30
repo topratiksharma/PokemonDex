@@ -3,7 +3,7 @@ import { createUseStyles } from 'react-jss';
 import { BrowserRouter, Routes, Route, HashRouter } from 'react-router-dom';
 import { LayoutProvider } from '../contexts';
 import { Nav } from '../components';
-import { ApolloProvider } from '@apollo/client';
+import { ApolloProvider } from '@apollo/client/react';
 import { client } from './client';
 import { ListPage, Home } from '../screens';
 import { PokemonDialog } from '../components/PokemonDialog';
@@ -14,7 +14,7 @@ function App() {
     <ApolloProvider client={client}>
       <LayoutProvider>
         <div className={classes.root}>
-          <HashRouter>
+          <HashRouter future={{ v7_startTransition: true }}>
             <Nav />
             <div className={classes.content}>
               <div className={classes.scrollableArea}>

@@ -1,23 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
-import ReactMarkdown from 'react-markdown';
+import Markdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import README from '../README.md';
 
 export const Home = () => {
   const classes = useStyles();
   const [markdown, setMarkdown] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
-    fetch(README)
+    fetch(README as string)
       .then((res) => res.text())
       .then((res) => {
         setMarkdown(res);
+        setLoading(false);
+      })
+      .catch(() => {
+        setError(true);
+        setLoading(false);
       });
   }, []);
 
   return (
     <div className={classes.root}>
-      <ReactMarkdown>{markdown}</ReactMarkdown>
+      {loading && <p>Loading...</p>}
+      {error && <p>Failed to load content.</p>}
+      {!loading && !error && (
+        <Markdown remarkPlugins={[remarkGfm]}>{markdown}</Markdown>
+      )}
     </div>
   );
 };

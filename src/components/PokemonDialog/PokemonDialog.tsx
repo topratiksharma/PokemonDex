@@ -85,7 +85,7 @@ export const PokemonDialog: React.FC<PokemonDialogProps> = ({ open }) => {
                       <TableRow>
                         <TableCell>Types</TableCell>
                         <TableCell align="right">
-                          {pokemonDetails.types.join(', ')}
+                          {pokemonDetails.types?.join(', ')}
                         </TableCell>
                       </TableRow>
                       <TableRow>

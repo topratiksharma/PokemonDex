@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
-import { useQuery } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
+import { useQuery } from '@apollo/client/react';
+import { gql } from '@apollo/client';
 
 export type Pokemon = {
   classification?: string;
@@ -21,22 +21,6 @@ export type Pokemon = {
 export type Dimensions = {
   minimum: string;
   maximum: string;
-};
-
-export type PokemonOption = {
-  classification?: Pokemon['classification'];
-  fleeRate?: Pokemon['fleeRate'];
-  height?: Pokemon['height'];
-  image: Pokemon['image'];
-  name: Pokemon['name'];
-  maxCP?: Pokemon['maxCP'];
-  maxHP?: Pokemon['maxHP'];
-  resistant?: Pokemon['resistant'];
-  number: Pokemon['number'];
-  types: Pokemon['types'];
-  value: Pokemon['id'];
-  weaknesses?: Pokemon['weaknesses'];
-  weight?: Pokemon['weight'];
 };
 
 export const GET_POKEMONS = gql`
@@ -78,40 +62,23 @@ export const GET_POKEMON_DETAILS = gql`
 `;
 
 export const useGetPokemons = () => {
-  const { data, ...queryRes } = useQuery(GET_POKEMONS, {
+  const { data, loading, error } = useQuery<{ pokemons: Pokemon[] }>(GET_POKEMONS, {
     variables: { first: 151 },
   });
 
   const pokemons: Pokemon[] = useMemo(() => data?.pokemons || [], [data]);
 
-  const pokemonOptions: PokemonOption[] = useMemo(
-    () =>
-      pokemons.map((p: Pokemon) => ({
-        value: p.id,
-        name: p.name,
-        number: p.number,
-        types: p.types,
-        image: p.image,
-      })),
-    [pokemons]
-  );
-
-  return {
-    pokemons,
-    pokemonOptions,
-    ...queryRes,
-  };
+  return { pokemons, loading, error };
 };
 
 export const useGetPokemonDetails = (id?: string) => {
-
-  const { data, ...queryRes } = useQuery(GET_POKEMON_DETAILS, {
-    variables: { id: id },
+  const { data, loading, error } = useQuery<{ pokemon: Pokemon }>(GET_POKEMON_DETAILS, {
+    variables: { id },
   });
 
-  let pokemon: Pokemon = data?.pokemon;
+  const pokemon = data?.pokemon;
 
-  let pokemonDetails = useMemo(
+  const pokemonDetails = useMemo(
     () => ({
       classification: pokemon?.classification,
       fleeRate: pokemon?.fleeRate,
@@ -130,8 +97,5 @@ export const useGetPokemonDetails = (id?: string) => {
     [pokemon]
   );
 
-  return {
-    pokemonDetails,
-    ...queryRes,
-  };
+  return { pokemonDetails, loading, error };
 };
